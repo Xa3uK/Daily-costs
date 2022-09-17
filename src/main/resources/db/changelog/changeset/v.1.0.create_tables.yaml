@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0
+      author: Fishbone
+      tag: create_tables
+      changes:
+        - sqlFile:
+           dbms: postgresql
+           splitStatements: false
+           path: db/changelog/changeset/sql/create_tables.sql
+           stripComments: true

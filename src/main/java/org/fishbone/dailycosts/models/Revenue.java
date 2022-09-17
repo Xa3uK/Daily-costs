@@ -12,11 +12,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Revenue {
+
+    private User user;
     private double amount;
     private String revenueType;
     private Date date;
 
-    public Revenue(double amount, String revenueType) {
+    public Revenue(User user, double amount, String revenueType) {
+        this.user = user;
         this.amount = amount;
         this.revenueType = revenueType;
         this.date = new Date();
