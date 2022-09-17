@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,22 +28,27 @@ public class User {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "name")
+    @Size(min = 5, max = 50, message = "Name length must be between 5 and 50")
     private String name;
+
+    @Size(min = 5, max = 20, message = "Login length must be between 5 and 50")
     @Column(name = "login")
     private String login;
+
     @Column(name = "password")
-    private String password;
+    private String encodedPassword;
+
+    @Size(min = 6, max = 15, message = "Password length must be between 6 and 15")
+    private transient String pass;
+
     @Column(name = "balance")
     private double balance;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Revenue> revenueList = new ArrayList<>();
 
-    public User(String name, String login, String password) {
-        this.name = name;
-        this.login = login;
-        this.password = password;
-        this.balance = 0;
-    }
+    @Column(name = "role")
+    private String role;
 }

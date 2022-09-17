@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+  <h1>Registration</h1>
+  <form th:method="post" th:action="@{/registration/reg}" th:object="${user}">
+    <label for="name">Enter username</label>
+    <input type="text" name="name" id="name" th:field="*{name}">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+      name error
+    </div>
+    <br/>
+    <label for="login">Enter login</label>
+    <input type="text" name="login" id="login" th:field="*{login}">
+    <div style="color:red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">
+      login error
+    </div>
+    <br/>
+    <label for="pass">Enter password</label>
+    <input type="pass" name="pass" id="pass" th:field="*{pass}">
+    <div style="color:red" th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}">
+      password error
+    </div>
+    <br/>
+    <input type="submit" class="btn btn-primary" value="Register">
+  </form>
+</div>
+</body>
+</html>

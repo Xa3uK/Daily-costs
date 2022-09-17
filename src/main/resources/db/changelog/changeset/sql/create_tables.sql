@@ -4,8 +4,9 @@ CREATE TABLE users
     id     serial PRIMARY KEY,
     name varchar(40) NOT NULL,
     login varchar(20) UNIQUE NOT NULL,
-    password varchar(20) NOT NULL,
-    balance decimal NOT NULL
+    password varchar(100) NOT NULL,
+    balance decimal NOT NULL,
+    role varchar(100) NOT NULL
 );
 
 DROP TABLE IF EXISTS purchases CASCADE;
