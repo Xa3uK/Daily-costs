@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
   <title>Main</title>
   <link rel="stylesheet"
@@ -10,9 +10,20 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8">
-      <h1 > Main </h1>
+      <h1 > Main dashboard </h1>
+      <h3>
+      <span>Welcome </span>
+      <span th:text="${user.getName()}"> User Name </span>
+      </br>
+      <span>Balance </span>
+      <span th:text="${user.getBalance()}"> User balance </span>
+      </h3>
+      <a class="btn btn-warning" href="#" th:href="@{/balance}"> Balance details </a>
     </div>
   </div>
+  <form th:action="@{/logout}" th:method="POST">
+    <input class="btn btn-info" type="submit" value="Logout">
+  </form>
 
 </div>
 </body>

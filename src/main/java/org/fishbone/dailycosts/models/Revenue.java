@@ -38,11 +38,4 @@ public class Revenue {
     private String revenueType;
     @Column(name = "date")
     private Date date;
-
-    public Revenue(User user, double amount, String revenueType) {
-        this.user = user;
-        this.amount = amount;
-        this.revenueType = revenueType;
-        this.date = new Date();
-    }
 }
