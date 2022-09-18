@@ -1,17 +1,12 @@
 package org.fishbone.dailycosts.controllers;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.fishbone.dailycosts.models.Purchase;
 import org.fishbone.dailycosts.models.Revenue;
 import org.fishbone.dailycosts.models.User;
-import org.fishbone.dailycosts.repositories.UserRepository;
 import org.fishbone.dailycosts.services.BalanceService;
 import org.fishbone.dailycosts.services.PersonDetailsService;
 import org.fishbone.dailycosts.services.PurchaseService;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

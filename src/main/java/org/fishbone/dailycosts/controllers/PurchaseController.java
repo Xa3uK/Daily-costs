@@ -2,9 +2,7 @@ package org.fishbone.dailycosts.controllers;
 
 import java.util.Optional;
 import org.fishbone.dailycosts.dto.PurchaseDTO;
-import org.fishbone.dailycosts.dto.RevenueDTO;
 import org.fishbone.dailycosts.models.Purchase;
-import org.fishbone.dailycosts.models.Revenue;
 import org.fishbone.dailycosts.models.User;
 import org.fishbone.dailycosts.services.PersonDetailsService;
 import org.fishbone.dailycosts.services.PurchaseService;

@@ -1,5 +1,6 @@
 package org.fishbone.dailycosts.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
 @Getter
 @Setter
@@ -41,4 +43,9 @@ public class Revenue {
 
     @Column(name = "date")
     private Date date;
+
+    @SneakyThrows
+    public String getDate() {
+        return new SimpleDateFormat("dd.MM.yyyy").format(date);
+    }
 }
