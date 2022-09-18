@@ -8,7 +8,9 @@ import org.fishbone.dailycosts.services.PersonDetailsService;
 import org.fishbone.dailycosts.services.PurchaseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -36,6 +38,14 @@ public class PurchaseController {
         String userLogin = personDetailsService.getCurrentUserLogin();
         Optional<User> user = personDetailsService.findUserByLogin(userLogin);
         purchaseService.save(purchase, user.get());
+
+        return "redirect:/main";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBook(@PathVariable("id") int id) {
+
+        purchaseService.deletePurchaseById(id);
 
         return "redirect:/main";
     }

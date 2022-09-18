@@ -26,6 +26,10 @@ public class PurchaseService {
         return purchaseRepository.findByUserId(userId);
     }
 
+    public void deletePurchaseById(int id){
+        purchaseRepository.deleteById(id);
+    }
+
     @Transactional
     public void save(Purchase purchase, User user){
         purchase.setDate(new Date());

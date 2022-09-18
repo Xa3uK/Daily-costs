@@ -34,6 +34,10 @@
             <option value="Food">Food</option>
             <option value="Pharmacy">Pharmacy</option>
             <option value="Beauty">Beauty</option>
+            <option value="Bills">Bills</option>
+            <option value="Transport">Transport</option>
+            <option value="Clothes">Clothes</option>
+            <option value="House">House</option>
           </select>
         </div>
 
@@ -42,7 +46,7 @@
           <input type="text" class="form-control" id="price" name="price"/>
         </div>
 
-        <input type="submit" class="btn btn-primary" value="Add purchase!">
+        <input type="submit" class="btn btn-primary" value="Add purchase">
       </form>
     </div>
 
@@ -66,6 +70,7 @@
             <td><span th:text="${purchase.getProductCategory()}"> Category </span></td>
             <td><span th:text="${purchase.getPrice()}"> Price </span></td>
             <td><span th:text="${purchase.getDate()}"> Date </span></td>
+            <td><a class="btn btn-danger" th:href="@{/purchase/delete/{id}(id=${purchase.getId()})}"> Delete </a></td>
           </tr>
           </tbody>
         </table>

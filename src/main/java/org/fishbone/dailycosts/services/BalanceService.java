@@ -25,6 +25,9 @@ public class BalanceService {
         return balanceRepository.findByUserId(userId);
     }
 
+    public void deleteRevenueById(int id){
+        balanceRepository.deleteById(id);
+    }
 
     @Transactional
     public void save(Revenue revenue, User user){

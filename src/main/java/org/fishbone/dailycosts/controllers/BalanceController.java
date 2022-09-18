@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -46,6 +47,14 @@ public class BalanceController {
         String userLogin = personDetailsService.getCurrentUserLogin();
         Optional<User> user = personDetailsService.findUserByLogin(userLogin);
         balanceService.save(revenue, user.get());
+
+        return "redirect:/balance";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBook(@PathVariable("id") int id) {
+
+        balanceService.deleteRevenueById(id);
 
         return "redirect:/balance";
     }
