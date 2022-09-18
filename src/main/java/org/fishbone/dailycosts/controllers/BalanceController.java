@@ -38,16 +38,9 @@ public class BalanceController {
         return "balance";
     }
 
-    @GetMapping("/add")
-    public String add(Model model) {
-        model.addAttribute("Revenue", new Revenue());
-        model.addAttribute("revenues", balanceService.findAll());
-        return "balance";
-    }
-
     @PostMapping("/add")
     public String add(@ModelAttribute("RevenueDTO") RevenueDTO revenueDTO) {
-
+        revenueDTO.setAmount(revenueDTO.getAmount().replace(",", "."));
         Revenue revenue = modelMapper.map(revenueDTO, Revenue.class);
 
         String userLogin = personDetailsService.getCurrentUserLogin();

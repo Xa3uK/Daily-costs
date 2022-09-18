@@ -13,10 +13,12 @@ DROP TABLE IF EXISTS purchases CASCADE;
 CREATE TABLE purchases
 (
     id     serial PRIMARY KEY,
+    user_id int NOT NULL,
     product_name varchar(100) NOT NULL,
     product_category varchar(100) NOT NULL,
     price decimal NOT NULL,
-    date date NOT NULL
+    date date NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 DROP TABLE IF EXISTS revenues CASCADE;

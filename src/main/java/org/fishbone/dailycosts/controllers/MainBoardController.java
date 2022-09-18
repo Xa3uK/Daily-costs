@@ -1,9 +1,15 @@
 package org.fishbone.dailycosts.controllers;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import org.fishbone.dailycosts.models.Purchase;
+import org.fishbone.dailycosts.models.Revenue;
 import org.fishbone.dailycosts.models.User;
 import org.fishbone.dailycosts.repositories.UserRepository;
+import org.fishbone.dailycosts.services.BalanceService;
 import org.fishbone.dailycosts.services.PersonDetailsService;
+import org.fishbone.dailycosts.services.PurchaseService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -16,16 +22,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainBoardController {
 
     PersonDetailsService personDetailsService;
+    BalanceService balanceService;
+    PurchaseService purchaseService;
 
-    public MainBoardController(PersonDetailsService personDetailsService) {
+    public MainBoardController(PersonDetailsService personDetailsService, BalanceService balanceService,
+                               PurchaseService purchaseService) {
         this.personDetailsService = personDetailsService;
+        this.balanceService = balanceService;
+        this.purchaseService = purchaseService;
     }
 
     @GetMapping()
     public String mainBoard(Model model) {
-        String userLogin = personDetailsService.getCurrentUserLogin();
+        User user = personDetailsService.findUserByLogin(personDetailsService.getCurrentUserLogin()).get();
+        List<Revenue> revenueList = balanceService.findRevenueByUserId(user.getId());
+        List<Purchase> purchaseList = purchaseService.findRevenueByUserId(user.getId());
 
-        personDetailsService.findUserByLogin(userLogin).ifPresent(value -> model.addAttribute("user", value));
+        double balance = revenueList.stream().map(Revenue::getAmount).mapToDouble(Double::doubleValue).sum();
+        balance -= purchaseList.stream().map(Purchase::getPrice).mapToDouble(Double::doubleValue).sum();
+        user.setBalance(balance);
+
+        model.addAttribute("purchases", purchaseList);
+        model.addAttribute("user", user);
 
         return "main";
     }

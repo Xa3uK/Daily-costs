@@ -49,6 +49,13 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Revenue> revenueList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<Purchase> purchaseList = new ArrayList<>();
+
     @Column(name = "role")
     private String role;
+
+    public String getFormattedBalance() {
+        return String.format("%,.2f", balance);
+    }
 }

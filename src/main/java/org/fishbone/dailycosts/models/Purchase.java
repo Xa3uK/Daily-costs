@@ -1,11 +1,15 @@
 package org.fishbone.dailycosts.models;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,9 +34,13 @@ public class Purchase {
     @Column(name = "product_category")
     private String productCategory;
     @Column(name = "price")
-    private double price;
+    private Double price;
     @Column(name = "date")
     private Date date;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Purchase(String productName, String productCategory, double price) {
         this.productName = productName;

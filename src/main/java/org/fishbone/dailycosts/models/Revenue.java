@@ -28,14 +28,17 @@ public class Revenue {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "amount")
-    private double amount;
+    private Double amount;
+
     @Column(name = "revenue_type")
     private String revenueType;
+
     @Column(name = "date")
     private Date date;
 }
