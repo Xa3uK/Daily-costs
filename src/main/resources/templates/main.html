@@ -10,13 +10,13 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8">
-      <h1 > Main dashboard </h1>
+      <h1> Main dashboard </h1>
       <h3>
-      <span>Welcome </span>
-      <span th:text="${user.getName()}"> User Name </span>
-      </br>
-      <span>Balance </span>
-      <span th:text="${user.getFormattedBalance()}"> User balance </span>
+        <span>Welcome </span>
+        <span th:text="${user.getName()}"> User Name </span>
+        </br>
+        <span>Balance </span>
+        <span th:text="${user.getFormattedBalance()}"> User balance </span>
       </h3>
       <a class="btn btn-warning" href="#" th:href="@{/balance}"> Balance details </a>
     </div>
@@ -55,31 +55,72 @@
         <table class="table">
           <thead>
           <tr>
-            <th> Product </th>
-            <th> Category </th>
-            <th> Price </th>
-            <th> Date </th>
+            <th> Product</th>
+            <th> Category</th>
+            <th> Price</th>
+            <th> Date</th>
           </tr>
           </thead>
           <tbody>
-          <!--      <tr th:if="${revenues.empty}">-->
-          <!--        <td colspan="2"> No revenues available</td>-->
-          <!--      </tr>-->
           <tr th:each="purchase : ${purchases}">
             <td><span th:text="${purchase.getProductName()}"> Product </span></td>
             <td><span th:text="${purchase.getProductCategory()}"> Category </span></td>
             <td><span th:text="${purchase.getPrice()}"> Price </span></td>
-            <td><span th:text="${purchase.getDate()}"> Date </span></td>
-            <td><a class="btn btn-danger" th:href="@{/purchase/delete/{id}(id=${purchase.getId()})}"> Delete </a></td>
+            <td><span th:text="${purchase.getFormattedDate()}"> Date </span></td>
+            <td><a class="btn btn-danger"
+                   th:href="@{/purchase/delete/{id}(id=${purchase.getId()})}"> Delete </a></td>
           </tr>
           </tbody>
         </table>
+
+        <h5>
+          <span style="color:#FF0000"> Total expenses: </span>
+          <span style="color:#FF0000" th:text="${expenses}"> Expenses </span>
+        </h5>
       </div>
-  </div>
-  <form th:action="@{/logout}" th:method="POST">
-    <input class="btn btn-info" type="submit" value="Logout">
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Search</h4>
+      </div>
+    </div>
+    <form th:method="GET" th:action="@{/main}">
+      <div class="form-group col-md-6">
+        <label for="category">Category</label>
+        <select id="category" name="category">
+          <option value="All">All</option>
+          <option value="Food">Food</option>
+          <option value="Pharmacy">Pharmacy</option>
+          <option value="Beauty">Beauty</option>
+          <option value="Bills">Bills</option>
+          <option value="Transport">Transport</option>
+          <option value="Clothes">Clothes</option>
+          <option value="House">House</option>
+        </select>
+
+        <label for="from">From:</label>
+        <input type="date" id="from" name="from"
+               th:value="${from}"
+               min="2022-01-01" max="2025-12-31">
+
+        <label for="to">To:</label>
+        <input type="date" id="to" name="to"
+               th:value="${to}"
+               min="2022-01-01" max="2025-12-31">
+
+        <input type="submit" class="btn btn-primary" value="Find">
+      </div>
+
   </form>
-  </div>
+</div>
+
+
+
+<form th:action="@{/logout}" th:method="POST">
+  <input class="btn btn-info" type="submit" value="Logout">
+</form>
+</div>
 </div>
 </body>
 </html>

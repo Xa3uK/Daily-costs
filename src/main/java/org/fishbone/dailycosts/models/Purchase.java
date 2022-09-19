@@ -52,7 +52,7 @@ public class Purchase {
     }
 
     @SneakyThrows
-    public String getDate() {
-        return new SimpleDateFormat("dd.MM.yyyy").format(date);
+    public String getFormattedDate() {
+        return new SimpleDateFormat("dd-MM-yyyy").format(date);
     }
 }
