@@ -11,37 +11,18 @@
   <div class="row">
     <div class="col-sm-12">
       <h1> Balance history </h1>
-      <table class="table">
-        <thead>
-        <tr>
-          <th> Amount</th>
-          <th> Type</th>
-          <th> Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!--      <tr th:if="${revenues.empty}">-->
-        <!--        <td colspan="2"> No revenues available</td>-->
-        <!--      </tr>-->
-        <tr th:each="revenue : ${revenues}">
-          <td><span th:text="${revenue.getAmount()}"> Amount </span></td>
-          <td><span th:text="${revenue.getRevenueType()}"> Type </span></td>
-          <td><span th:text="${revenue.getDate()}"> Date </span></td>
-          <td><a class="btn btn-danger" th:href="@{/balance/delete/{id}(id=${revenue.getId()})}">
-            Delete </a></td>
-        </tr>
-        </tbody>
-      </table>
 
-      <div class="col-md-6">
         <h4>Add new revenue</h4>
-      </div>
+
     </div>
     <div class="col-md-6">
       <form th:method="POST" th:action="@{/balance/add}" th:object="${RevenueDTO}">
         <div class="form-group">
           <label for="amount">Amount</label>
           <input type="text" class="form-control" id="amount" name="amount"/>
+          <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount
+            error
+          </div>
         </div>
 
         <div class="form-group">
@@ -58,13 +39,34 @@
     </div>
 
 
-    <div class="col-md-8">
+    <div class="col-md-12">
       <a class="btn btn-warning" href="#" th:href="@{/main}"> Back </a>
       <form th:action="@{/logout}" th:method="POST">
         <input class="btn btn-info" type="submit" value="Logout">
       </form>
     </div>
+
+
   </div>
+
+  <table class="table table-dark">
+    <thead>
+    <tr>
+      <th> Amount</th>
+      <th> Type</th>
+      <th> Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="revenue : ${revenues}">
+      <td><span th:text="${revenue.getAmount()}"> Amount </span></td>
+      <td><span th:text="${revenue.getRevenueType()}"> Type </span></td>
+      <td><span th:text="${revenue.getDate()}"> Date </span></td>
+      <td><a class="btn btn-danger" th:href="@{/balance/delete/{id}(id=${revenue.getId()})}">
+        Delete </a></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 </div>
 </body>

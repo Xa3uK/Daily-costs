@@ -1,6 +1,7 @@
 package org.fishbone.dailycosts.controllers;
 
 import java.util.Optional;
+import javax.validation.Valid;
 import org.fishbone.dailycosts.dto.RevenueDTO;
 import org.fishbone.dailycosts.models.Revenue;
 import org.fishbone.dailycosts.models.User;
@@ -9,6 +10,7 @@ import org.fishbone.dailycosts.services.PersonDetailsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,12 +37,22 @@ public class BalanceController {
         User user = personDetailsService.findUserByLogin(personDetailsService.getCurrentUserLogin()).get();
 
         model.addAttribute("revenues", balanceService.findRevenueByUserId(user.getId()));
+        model.addAttribute("RevenueDTO", new RevenueDTO());
 
         return "balance";
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("RevenueDTO") RevenueDTO revenueDTO) {
+    public String add(Model model, @ModelAttribute("RevenueDTO") @Valid RevenueDTO revenueDTO,
+                      BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            User user = personDetailsService.findUserByLogin(personDetailsService.getCurrentUserLogin()).get();
+
+            model.addAttribute("revenues", balanceService.findRevenueByUserId(user.getId()));
+            return "/balance";
+        }
+
         revenueDTO.setAmount(revenueDTO.getAmount().replace(",", "."));
         Revenue revenue = modelMapper.map(revenueDTO, Revenue.class);
 

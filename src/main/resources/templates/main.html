@@ -19,77 +19,23 @@
         <span th:text="${user.getFormattedBalance()}"> User balance </span>
       </h3>
       <a class="btn btn-warning" href="#" th:href="@{/balance}"> Balance details </a>
-    </div>
 
-    <div class="col-md-6">
-      <form th:method="POST" th:action="@{/purchase/add}" th:object="${PurchaseDTO}">
-        <div class="form-group">
-          <label for="productName">Product </label>
-          <input type="text" class="form-control" id="productName" name="productName"/>
-        </div>
-
-        <div class="form-group">
-          <label for="productCategory">Category</label>
-          <select class="form-control" id="productCategory" name="productCategory">
-            <option value="Food">Food</option>
-            <option value="Pharmacy">Pharmacy</option>
-            <option value="Beauty">Beauty</option>
-            <option value="Bills">Bills</option>
-            <option value="Transport">Transport</option>
-            <option value="Clothes">Clothes</option>
-            <option value="House">House</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="price">Price </label>
-          <input type="text" class="form-control" id="price" name="price"/>
-        </div>
-
-        <input type="submit" class="btn btn-primary" value="Add purchase">
+      <form th:action="@{/logout}" th:method="POST">
+        <input class="btn btn-info" type="submit" value="Logout">
       </form>
     </div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <table class="table">
-          <thead>
-          <tr>
-            <th> Product</th>
-            <th> Category</th>
-            <th> Price</th>
-            <th> Date</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr th:each="purchase : ${purchases}">
-            <td><span th:text="${purchase.getProductName()}"> Product </span></td>
-            <td><span th:text="${purchase.getProductCategory()}"> Category </span></td>
-            <td><span th:text="${purchase.getPrice()}"> Price </span></td>
-            <td><span th:text="${purchase.getFormattedDate()}"> Date </span></td>
-            <td><a class="btn btn-danger"
-                   th:href="@{/purchase/delete/{id}(id=${purchase.getId()})}"> Delete </a></td>
-          </tr>
-          </tbody>
-        </table>
+    <form th:method="POST" th:action="@{/main/add}" th:object="${PurchaseDTO}">
+      <div class="form-group col-md-3">
+        <label for="productName">Product </label>
+        <input type="text" class="form-control" id="productName" name="productName"/>
+        <div style="color:red" th:if="${#fields.hasErrors('productName')}"
+             th:errors="*{productName}">Product
+          error
+        </div>
 
-        <h5>
-          <span style="color:#FF0000"> Total expenses: </span>
-          <span style="color:#FF0000" th:text="${expenses}"> Expenses </span>
-        </h5>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-3">
-        <h4>Search</h4>
-      </div>
-    </div>
-    <form th:method="GET" th:action="@{/main}">
-      <div class="form-group col-md-6">
-        <label for="category">Category</label>
-        <select id="category" name="category">
-          <option value="All">All</option>
+        <label for="productCategory">Category</label>
+        <select class="form-control" id="productCategory" name="productCategory">
           <option value="Food">Food</option>
           <option value="Pharmacy">Pharmacy</option>
           <option value="Beauty">Beauty</option>
@@ -99,27 +45,79 @@
           <option value="House">House</option>
         </select>
 
-        <label for="from">From:</label>
-        <input type="date" id="from" name="from"
-               th:value="${from}"
-               min="2022-01-01" max="2025-12-31">
+        <label for="price">Price </label>
+        <input type="text" class="form-control" id="price" name="price"/>
+        <div style="color:red" th:if="${#fields.hasErrors('price')}"
+             th:errors="*{price}">Price error
+        </div>
 
-        <label for="to">To:</label>
-        <input type="date" id="to" name="to"
-               th:value="${to}"
-               min="2022-01-01" max="2025-12-31">
-
-        <input type="submit" class="btn btn-primary" value="Find">
+        <input type="submit" class="btn btn-primary" value="Add purchase">
       </div>
+    </form>
+  </div>
 
+
+  <div class="row">
+    <div class="col-md-3">
+      <h4>Search</h4>
+    </div>
+  </div>
+  <form th:method="GET" th:action="@{/main}">
+    <div class="form-group col-md-12">
+      <label for="category">Category</label>
+      <select id="category" name="category">
+        <option value="All">All</option>
+        <option value="Food">Food</option>
+        <option value="Pharmacy">Pharmacy</option>
+        <option value="Beauty">Beauty</option>
+        <option value="Bills">Bills</option>
+        <option value="Transport">Transport</option>
+        <option value="Clothes">Clothes</option>
+        <option value="House">House</option>
+      </select>
+
+      <label for="from">From:</label>
+      <input type="date" id="from" name="from"
+             th:value="${from}"
+             min="2022-01-01" max="2025-12-31">
+
+      <label for="to">To:</label>
+      <input type="date" id="to" name="to"
+             th:value="${to}"
+             min="2022-01-01" max="2025-12-31">
+
+      <input type="submit" class="btn btn-primary" value="Find">
+
+      <h4>
+        <span style="color:#FF0000"> Total expenses: </span>
+        <span style="color:#FF0000" th:text="${expenses}"> Expenses </span>
+      </h4>
+    </div>
   </form>
-</div>
 
-
-
-<form th:action="@{/logout}" th:method="POST">
-  <input class="btn btn-info" type="submit" value="Logout">
-</form>
+<div class="row">
+  <div class="col-sm-11">
+    <table class="table">
+      <thead>
+      <tr>
+        <th> Product</th>
+        <th> Category</th>
+        <th> Price</th>
+        <th> Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="purchase : ${purchases}">
+        <td><span th:text="${purchase.getProductName()}"> Product </span></td>
+        <td><span th:text="${purchase.getProductCategory()}"> Category </span></td>
+        <td><span th:text="${purchase.getPrice()}"> Price </span></td>
+        <td><span th:text="${purchase.getFormattedDate()}"> Date </span></td>
+        <td><a class="btn btn-danger"
+               th:href="@{/main/delete/{id}(id=${purchase.getId()})}"> Delete </a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 </div>
 </body>
