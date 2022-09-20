@@ -27,11 +27,11 @@
 
     <form th:method="POST" th:action="@{/main/add}" th:object="${PurchaseDTO}">
       <div class="form-group col-md-3">
-        <label for="productName">Product </label>
-        <input type="text" class="form-control" id="productName" name="productName"/>
-        <div style="color:red" th:if="${#fields.hasErrors('productName')}"
-             th:errors="*{productName}">Product
-          error
+
+        <label for="price">Price </label>
+        <input type="text" class="form-control" id="price" name="price"/>
+        <div style="color:red" th:if="${#fields.hasErrors('price')}"
+             th:errors="*{price}">Price error
         </div>
 
         <label for="productCategory">Category</label>
@@ -43,12 +43,15 @@
           <option value="Transport">Transport</option>
           <option value="Clothes">Clothes</option>
           <option value="House">House</option>
+          <option value="Other">Other</option>
+          <option value="Personal">Personal</option>
         </select>
 
-        <label for="price">Price </label>
-        <input type="text" class="form-control" id="price" name="price"/>
-        <div style="color:red" th:if="${#fields.hasErrors('price')}"
-             th:errors="*{price}">Price error
+        <label for="productName">Product </label>
+        <input type="text" class="form-control" id="productName" name="productName"/>
+        <div style="color:red" th:if="${#fields.hasErrors('productName')}"
+             th:errors="*{productName}">Product
+          error
         </div>
 
         <input type="submit" class="btn btn-primary" value="Add purchase">
