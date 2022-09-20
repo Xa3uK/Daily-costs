@@ -1,5 +1,6 @@
 package org.fishbone.dailycosts.controllers;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -54,12 +55,23 @@ public class MainBoardController {
 
         List<Purchase> purchasesWithFilter = purchaseService.findPurchaseByFilter(from, to, category, user.getId());
 
-        double balance = revenueList.stream().map(Revenue::getAmount).mapToDouble(Double::doubleValue).sum();
-        balance -= purchaseList.stream().map(Purchase::getPrice).mapToDouble(Double::doubleValue).sum();
+        double balance = revenueList.stream()
+            .map(Revenue::getAmount)
+            .mapToDouble(Double::doubleValue)
+            .sum();
+
+        balance -= purchaseList.stream()
+            .map(Purchase::getPrice)
+            .mapToDouble(Double::doubleValue)
+            .sum();
+
         user.setBalance(balance);
 
-        double expenses =
-            purchasesWithFilter.stream().map(Purchase::getPrice).mapToDouble(Double::doubleValue).sum();
+        String expenses = new DecimalFormat("#.##")
+            .format(purchasesWithFilter.stream()
+                .map(Purchase::getPrice)
+                .mapToDouble(Double::doubleValue)
+                .sum());
 
         model.addAttribute("purchases", purchasesWithFilter);
         model.addAttribute("expenses", expenses);
@@ -87,25 +99,36 @@ public class MainBoardController {
 
             List<Purchase> purchasesWithFilter = purchaseService.findPurchaseByFilter(from, to, category, user.getId());
 
-            double balance = revenueList.stream().map(Revenue::getAmount).mapToDouble(Double::doubleValue).sum();
-            balance -= purchaseList.stream().map(Purchase::getPrice).mapToDouble(Double::doubleValue).sum();
+            double balance = revenueList.stream()
+                .map(Revenue::getAmount)
+                .mapToDouble(Double::doubleValue)
+                .sum();
+
+            balance -= purchaseList.stream()
+                .map(Purchase::getPrice)
+                .mapToDouble(Double::doubleValue)
+                .sum();
+
             user.setBalance(balance);
 
-            double expenses =
-                purchasesWithFilter.stream().map(Purchase::getPrice).mapToDouble(Double::doubleValue).sum();
+            String expenses = new DecimalFormat("#.##")
+                .format(purchasesWithFilter.stream()
+                    .map(Purchase::getPrice)
+                    .mapToDouble(Double::doubleValue)
+                    .sum());
 
             model.addAttribute("purchases", purchasesWithFilter);
             model.addAttribute("expenses", expenses);
             model.addAttribute("user", user);
+
             return "/main";
         }
 
         purchaseDTO.setPrice(purchaseDTO.getPrice().replace(",", "."));
         Purchase purchase = modelMapper.map(purchaseDTO, Purchase.class);
 
-        String userLogin = personDetailsService.getCurrentUserLogin();
-        Optional<User> user = personDetailsService.findUserByLogin(userLogin);
-        purchaseService.save(purchase, user.get());
+        personDetailsService.findUserByLogin(personDetailsService.getCurrentUserLogin())
+        .ifPresent(user -> purchaseService.save(purchase, user));
 
         return "redirect:/main";
     }

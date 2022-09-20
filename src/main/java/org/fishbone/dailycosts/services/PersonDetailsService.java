@@ -47,4 +47,8 @@ public class PersonDetailsService implements UserDetailsService {
         }
         return userName;
     }
+
+    public int getUserId(){
+        return userRepository.findByLogin(getCurrentUserLogin()).get().getId();
+    }
 }

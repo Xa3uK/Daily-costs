@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class RevenueDTO {
 
-    @Pattern(regexp = "^[1-9]{1,10}$", message = "Price should contains only positive digits without spaces")
+    @Pattern(regexp = "^[\\d,.]+$", message = "Price should contains only positive digits without spaces")
     @Size(min = 1, max = 6, message = "Amount should be between 1-999999")
     private String amount;
     private String revenueType;
