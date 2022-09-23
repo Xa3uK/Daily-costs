@@ -75,9 +75,9 @@
 
       <a class="btn btn-warning" href="#"
          th:href="@{/main/export/pdf/{category}/{from}/{to}
-         (category=${#httpServletRequest.getParameter('category')},
-         from=${#httpServletRequest.getParameter('from')},
-         to=${#httpServletRequest.getParameter('to')})}">
+         (category=${#httpServletRequest.getParameter('category') ?: 'All'},
+         from=${#httpServletRequest.getParameter('from') ?: '2022-01-01'},
+         to=${#httpServletRequest.getParameter('to') ?: '2025-01-01'})}">
         Export PDF </a>
     </div>
   </form>

@@ -153,15 +153,9 @@ public class MainBoardController {
                           @PathVariable("to") String to)
         throws IOException {
 
-        System.out.println(category);
-        System.out.println(from);
-        System.out.println(to);
-
-
         List<Purchase> purchaseList2 = purchaseService.findPurchaseByFilter(from, to, category,
             personDetailsService.getUserId());
 
-        List<Purchase> purchaseList = purchaseService.findPurchaseByUserId(personDetailsService.getUserId());
         filesExporter.exportToPDF(purchaseList2, response);
     }
 }
