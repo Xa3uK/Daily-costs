@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
   <title>Daily-costs</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 
-  <link rel = "icon" href =
+  <link rel="icon" href=
       "https://cdn-icons-png.flaticon.com/512/61/61584.png"
-        type = "image/x-icon">
+        type="image/x-icon">
+
+  <link rel="stylesheet" href="/css/modal-style.css">
+  <script src="/js/addDialogModal.js" async></script>
 </head>
 <body>
-
 <div class="container">
   <div class="row">
     <div class="col-md-8">
@@ -24,43 +26,12 @@
       </h3>
       <a class="btn btn-warning" href="#" th:href="@{/balance}"> Balance details </a>
 
+      <button class="btn btn-success" id="addButton">Add purchase</button>
+
       <form th:action="@{/logout}" th:method="POST">
         <input class="btn btn-info" type="submit" value="Logout">
       </form>
     </div>
-
-    <form th:method="POST" th:action="@{/main/add}" th:object="${PurchaseDTO}">
-      <div class="form-group col-md-3">
-
-        <label for="price">Price </label>
-        <input type="text" class="form-control" id="price" name="price"/>
-        <div style="color:red" th:if="${#fields.hasErrors('price')}"
-             th:errors="*{price}">Price error
-        </div>
-
-        <label for="productCategory">Category</label>
-        <select class="form-control" id="productCategory" name="productCategory">
-          <option value="Food">Food</option>
-          <option value="Pharmacy">Pharmacy</option>
-          <option value="Beauty">Beauty</option>
-          <option value="Bills">Bills</option>
-          <option value="Transport">Transport</option>
-          <option value="Clothes">Clothes</option>
-          <option value="House">House</option>
-          <option value="Other">Other</option>
-          <option value="Personal">Personal</option>
-        </select>
-
-        <label for="productName">Product </label>
-        <input type="text" class="form-control" id="productName" name="productName"/>
-        <div style="color:red" th:if="${#fields.hasErrors('productName')}"
-             th:errors="*{productName}">Product
-          error
-        </div>
-
-        <input type="submit" class="btn btn-primary" value="Add purchase">
-      </div>
-    </form>
   </div>
 
 
@@ -104,30 +75,63 @@
     </div>
   </form>
 
-<div class="row">
-  <div class="col-sm-11">
-    <table class="table">
-      <thead>
-      <tr>
-        <th> Product</th>
-        <th> Category</th>
-        <th> Price</th>
-        <th> Date</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="purchase : ${purchases}">
-        <td><span th:text="${purchase.getProductName()}"> Product </span></td>
-        <td><span th:text="${purchase.getProductCategory()}"> Category </span></td>
-        <td><span th:text="${purchase.getPrice()}"> Price </span></td>
-        <td><span th:text="${purchase.getFormattedDate()}"> Date </span></td>
-        <td><a class="btn btn-danger"
-               th:href="@{/main/delete/{id}(id=${purchase.getId()})}"> Delete </a></td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-sm-11">
+      <table class="table">
+        <thead>
+        <tr>
+          <th> Product</th>
+          <th> Category</th>
+          <th> Price</th>
+          <th> Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="purchase : ${purchases}">
+          <td><span th:text="${purchase.getProductName()}"> Product </span></td>
+          <td><span th:text="${purchase.getProductCategory()}"> Category </span></td>
+          <td><span th:text="${purchase.getPrice()}"> Price </span></td>
+          <td><span th:text="${purchase.getFormattedDate()}"> Date </span></td>
+          <td><a class="btn btn-danger"
+                 th:href="@{/main/delete/{id}(id=${purchase.getId()})}"> Delete </a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+
+<div id="addDialogModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Please add your new purchase</h2>
+    </div>
+    <div class="modal-body">
+      <form th:method="POST" th:action="@{/main/add}" th:object="${PurchaseDTO}">
+        <label for="price">Price </label>
+        <input type="text" class="form-control" id="price" name="price"/></br>
+
+        <label for="productName">Product </label>
+        <input type="text" class="form-control" id="productName" name="productName"/> </br>
+
+        <label for="productCategory">Category</label>
+        <select class="form-control" id="productCategory" name="productCategory">
+          <option value="Food">Food</option>
+          <option value="Pharmacy">Pharmacy</option>
+          <option value="Beauty">Beauty</option>
+          <option value="Bills">Bills</option>
+          <option value="Transport">Transport</option>
+          <option value="Clothes">Clothes</option>
+          <option value="House">House</option>
+          <option value="Other">Other</option>
+          <option value="Personal">Personal</option>
+        </select></br>
+
+        <input type="submit" class="btn btn-success" value="Add purchase">
+      </form>
+    </div>
+  </div>
 </div>
 </body>
 </html>

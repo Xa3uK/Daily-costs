@@ -8,6 +8,9 @@
   <link rel = "icon" href =
       "https://cdn-icons-png.flaticon.com/512/61/61584.png"
         type = "image/x-icon">
+
+  <link rel="stylesheet" href="/css/modal-style.css">
+  <script src="/js/addDialogModal.js" async></script>
 </head>
 <body>
 
@@ -16,34 +19,34 @@
     <div class="col-sm-12">
       <h1> Balance history </h1>
 
-        <h4>Add new revenue</h4>
-
     </div>
-    <div class="col-md-6">
-      <form th:method="POST" th:action="@{/balance/add}" th:object="${RevenueDTO}">
-        <div class="form-group">
-          <label for="amount">Amount</label>
-          <input type="text" class="form-control" id="amount" name="amount"/>
-          <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount
-            error
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label for="revenueType">Type</label>
-          <select class="form-control" id="revenueType" name="revenueType">
-            <option value="Salary">Salary</option>
-            <option value="Prepaid">Prepaid</option>
-            <option value="Additional income">Additional income</option>
-          </select>
-        </div>
+<!--    <div class="col-md-6">-->
+<!--      <form th:method="POST" th:action="@{/balance/add}" th:object="${RevenueDTO}">-->
+<!--        <div class="form-group">-->
+<!--          <label for="amount">Amount</label>-->
+<!--          <input type="text" class="form-control" id="amount" name="amount"/>-->
+<!--          <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount-->
+<!--            error-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <input type="submit" class="btn btn-primary" value="Add revenue">
-      </form>
-    </div>
+<!--        <div class="form-group">-->
+<!--          <label for="revenueType">Type</label>-->
+<!--          <select class="form-control" id="revenueType" name="revenueType">-->
+<!--            <option value="Salary">Salary</option>-->
+<!--            <option value="Prepaid">Prepaid</option>-->
+<!--            <option value="Additional income">Additional income</option>-->
+<!--          </select>-->
+<!--        </div>-->
+
+<!--        <input type="submit" class="btn btn-primary" value="Add revenue">-->
+<!--      </form>-->
+<!--    </div>-->
 
 
     <div class="col-md-12">
+      <button class="btn btn-success" id="addButton">Add revenue</button> </br>
       <a class="btn btn-warning" href="#" th:href="@{/main}"> Back </a>
       <form th:action="@{/logout}" th:method="POST">
         <input class="btn btn-info" type="submit" value="Logout">
@@ -72,6 +75,37 @@
     </tbody>
   </table>
 </div>
+</div>
+
+<div id="addDialogModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Please add your new revenues</h2>
+    </div>
+    <div class="modal-body">
+      <form th:method="POST" th:action="@{/balance/add}" th:object="${RevenueDTO}">
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="text" class="form-control" id="amount" name="amount"/>
+          <div style="color:red" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Amount
+            error
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="revenueType">Type</label>
+          <select class="form-control" id="revenueType" name="revenueType">
+            <option value="Salary">Salary</option>
+            <option value="Prepaid">Prepaid</option>
+            <option value="Additional income">Additional income</option>
+          </select>
+        </div>
+
+        <input type="submit" class="btn btn-success" value="Add revenue">
+      </form>
+    </div>
+  </div>
 </div>
 </body>
 </html>
