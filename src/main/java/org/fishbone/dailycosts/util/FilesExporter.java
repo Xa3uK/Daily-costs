@@ -35,7 +35,7 @@ public class FilesExporter {
         response.setHeader(headerKey, headerValue);
     }
 
-    public void exportToPDF(List<Purchase> purchaseList, HttpServletResponse response) throws IOException {
+    public void exportToPDF(List<Purchase> purchaseList, Double totalSum, HttpServletResponse response) throws IOException {
         setResponseHeader(response, "application/pdf", ".pdf", "Purchases_");
 
         Document document = new Document(PageSize.A4);
@@ -49,7 +49,6 @@ public class FilesExporter {
 
         Paragraph para = new Paragraph("List of purchases", font);
         para.setAlignment(Paragraph.ALIGN_CENTER);
-
         document.add(para);
 
         PdfPTable table = new PdfPTable(4);
@@ -58,8 +57,15 @@ public class FilesExporter {
 
         writePurchaseHeader(table);
         writePurchaseData(table, purchaseList);
-
         document.add(table);
+
+
+        font.setSize(16);
+        font.setColor(Color.RED);
+        para = new Paragraph("Total sum: " + totalSum , font);
+        para.setAlignment(Paragraph.ALIGN_CENTER);
+        document.add(para);
+
         document.close();
     }
 

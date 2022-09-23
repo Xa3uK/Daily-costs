@@ -153,9 +153,14 @@ public class MainBoardController {
                           @PathVariable("to") String to)
         throws IOException {
 
-        List<Purchase> purchaseList2 = purchaseService.findPurchaseByFilter(from, to, category,
+        List<Purchase> purchaseList = purchaseService.findPurchaseByFilter(from, to, category,
             personDetailsService.getUserId());
 
-        filesExporter.exportToPDF(purchaseList2, response);
+        double totalSum = purchaseList.stream()
+            .map(Purchase::getPrice)
+            .mapToDouble(Double::doubleValue)
+            .sum();
+
+        filesExporter.exportToPDF(purchaseList, totalSum, response);
     }
 }
