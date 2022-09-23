@@ -72,8 +72,20 @@
         <span style="color:#FF0000"> Total expenses: </span>
         <span style="color:#FF0000" th:text="${expenses}"> Expenses </span>
       </h4>
+
+      <a class="btn btn-warning" href="#"
+         th:href="@{/main/export/pdf/{category}/{from}/{to}
+         (category=${#httpServletRequest.getParameter('category')},
+         from=${#httpServletRequest.getParameter('from')},
+         to=${#httpServletRequest.getParameter('to')})}">
+        Export PDF </a>
     </div>
   </form>
+
+  <div th:text="${#httpServletRequest.getParameter('from')}"
+       th:unless="${#httpServletRequest.getParameter('from') == null}">
+    tam pusto
+  </div>
 
   <div class="row">
     <div class="col-sm-11">

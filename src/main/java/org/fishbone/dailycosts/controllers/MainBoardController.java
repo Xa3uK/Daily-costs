@@ -1,10 +1,12 @@
 package org.fishbone.dailycosts.controllers;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.SneakyThrows;
 import org.fishbone.dailycosts.dto.PurchaseDTO;
@@ -14,6 +16,7 @@ import org.fishbone.dailycosts.models.User;
 import org.fishbone.dailycosts.services.BalanceService;
 import org.fishbone.dailycosts.services.PersonDetailsService;
 import org.fishbone.dailycosts.services.PurchaseService;
+import org.fishbone.dailycosts.util.FilesExporter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,13 +36,15 @@ public class MainBoardController {
     BalanceService balanceService;
     PurchaseService purchaseService;
     ModelMapper modelMapper;
+    FilesExporter filesExporter;
 
     public MainBoardController(PersonDetailsService personDetailsService, BalanceService balanceService,
-                               PurchaseService purchaseService, ModelMapper modelMapper) {
+                               PurchaseService purchaseService, ModelMapper modelMapper, FilesExporter filesExporter) {
         this.personDetailsService = personDetailsService;
         this.balanceService = balanceService;
         this.purchaseService = purchaseService;
         this.modelMapper = modelMapper;
+        this.filesExporter = filesExporter;
     }
 
     @SneakyThrows
@@ -139,5 +144,24 @@ public class MainBoardController {
         purchaseService.deletePurchaseById(id);
 
         return "redirect:/main";
+    }
+
+    @GetMapping("/export/pdf/{category}/{from}/{to}")
+    public void exportPDF(HttpServletResponse response,
+                          @PathVariable("category") String category,
+                          @PathVariable("from") String from,
+                          @PathVariable("to") String to)
+        throws IOException {
+
+        System.out.println(category);
+        System.out.println(from);
+        System.out.println(to);
+
+
+        List<Purchase> purchaseList2 = purchaseService.findPurchaseByFilter(from, to, category,
+            personDetailsService.getUserId());
+
+        List<Purchase> purchaseList = purchaseService.findPurchaseByUserId(personDetailsService.getUserId());
+        filesExporter.exportToPDF(purchaseList2, response);
     }
 }
