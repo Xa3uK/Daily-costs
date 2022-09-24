@@ -5,25 +5,22 @@
   <title>Login</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/modal-style.css">
 </head>
 <body>
 <div class="container">
-  <h1>Sign in</h1>
-  <form name="f" method="post" action="/process_login">
+  <h1 class="col-md-2 col-md-offset-4"> Sign in</h1>
+  <form class="col-md-7 col-md-offset-4 align-center" name="f" method="post" action="/process_login">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-    <label for="username">Enter login</label>
-    <input type="text" name="username" id="username">
-    <br/>
-    <label for="password">Enter password</label>
-    <input type="password" name="password" id="password">
-    <br/>
-    <input type="submit" class="btn btn-primary" value="Login">
+    <input type="text" name="username" id="username" placeholder="Login"><br/>
+    <input type="password" name="password" id="password" placeholder="Password"><br/>
+    <input type="submit" class="btn btn-primary col-md-3 col-md-offset--1" value="Login">
 
     <div th:if="${param.error}" style="color: red">
       Wrong name or password
     </div>
   </form>
-  <a class="btn btn-success" th:href="@{/auth/registration}"> Registration </a>
+  <a class="btn btn-success col-md-2 col-md-offset-4" th:href="@{/auth/registration}"> Registration </a>
 </div>
 </body>
 </html>
