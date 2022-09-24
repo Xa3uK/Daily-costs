@@ -8,6 +8,7 @@
 - adding purchases (product name, type, price...)
 - filtering purchases by type or date
 - checking current balance
+- export data in PDF
 
 > Data should be saved via PostgreSQL
 

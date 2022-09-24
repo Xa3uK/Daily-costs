@@ -3,6 +3,7 @@ package org.fishbone.dailycosts.controllers;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +60,7 @@ public class MainBoardController {
         List<Purchase> purchaseList = purchaseService.findPurchaseByUserId(user.getId());
 
         List<Purchase> purchasesWithFilter = purchaseService.findPurchaseByFilter(from, to, category, user.getId());
+        purchasesWithFilter.sort(Comparator.comparing(Purchase::getDate).reversed());
 
         double balance = revenueList.stream()
             .map(Revenue::getAmount)
@@ -103,6 +105,7 @@ public class MainBoardController {
             List<Purchase> purchaseList = purchaseService.findPurchaseByUserId(user.getId());
 
             List<Purchase> purchasesWithFilter = purchaseService.findPurchaseByFilter(from, to, category, user.getId());
+            purchasesWithFilter.sort(Comparator.comparing(Purchase::getDate).reversed());
 
             double balance = revenueList.stream()
                 .map(Revenue::getAmount)

@@ -1,5 +1,7 @@
 package org.fishbone.dailycosts.controllers;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.fishbone.dailycosts.dto.RevenueDTO;
@@ -35,8 +37,10 @@ public class BalanceController {
     @GetMapping
     public String show(Model model) {
         User user = personDetailsService.findUserByLogin(personDetailsService.getCurrentUserLogin()).get();
+        List<Revenue> revenueList = balanceService.findRevenueByUserId(user.getId());
+        revenueList.sort(Comparator.comparing(Revenue::getDate).reversed());
 
-        model.addAttribute("revenues", balanceService.findRevenueByUserId(user.getId()));
+        model.addAttribute("revenues", revenueList);
         model.addAttribute("RevenueDTO", new RevenueDTO());
 
         return "balance";
