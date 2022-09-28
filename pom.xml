@@ -11,7 +11,7 @@
 	<groupId>org.fishbone</groupId>
 	<artifactId>daily-costs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>daily-costs</name>
 	<description>web-app for control of daily costs</description>
 	<properties>

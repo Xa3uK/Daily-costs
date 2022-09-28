@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  postgres:
+    restart: always
+    container_name: sample_db
+    image: postgres:10.4
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=perilrulit1
+      - POSTGRES_USER=xa3uk
+      - POSTGRES_DB=daily_costs
+  # APP**
+  web:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/daily_costs
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
