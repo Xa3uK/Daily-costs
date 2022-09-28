@@ -15,6 +15,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import org.fishbone.dailycosts.models.Purchase;
 import org.springframework.stereotype.Component;
@@ -47,24 +49,37 @@ public class FilesExporter {
         font.setSize(18);
         font.setColor(Color.BLACK);
 
-        Paragraph para = new Paragraph("List of purchases", font);
+        Paragraph para = new Paragraph("Total expenses", font);
         para.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(para);
 
-        PdfPTable table = new PdfPTable(4);
+        PdfPTable table = new PdfPTable(2);
         table.setWidthPercentage(100f);
         table.setSpacingBefore(10);
-
-        writePurchaseHeader(table);
-        writePurchaseData(table, purchaseList);
+        writeTotalHeader(table);
+        writeTotalData(table, purchaseList);
         document.add(table);
-
 
         font.setSize(16);
         font.setColor(Color.RED);
         para = new Paragraph("Total sum: " + totalSum , font);
         para.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(para);
+
+        font.setSize(18);
+        font.setColor(Color.BLACK);
+
+        para = new Paragraph("List of purchases", font);
+        para.setAlignment(Paragraph.ALIGN_CENTER);
+        document.add(para);
+
+        table = new PdfPTable(4);
+        table.setWidthPercentage(100f);
+        table.setSpacingBefore(10);
+
+        writePurchaseHeader(table);
+        writePurchaseData(table, purchaseList);
+        document.add(table);
 
         document.close();
     }
@@ -94,5 +109,30 @@ public class FilesExporter {
         table.addCell(cell);
         cell.setPhrase(new Phrase("Date", font));
         table.addCell(cell);
+    }
+
+    private void writeTotalHeader(PdfPTable table) {
+        PdfPCell cell = new PdfPCell();
+        cell.setBackgroundColor(Color.ORANGE);
+        cell.setPadding(5);
+
+        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        font.setColor(Color.BLACK);
+
+        cell.setPhrase(new Phrase("Category", font));
+        table.addCell(cell);
+        cell.setPhrase(new Phrase("Total Sum", font));
+        table.addCell(cell);
+    }
+
+    private void writeTotalData(PdfPTable table, List<Purchase> purchaseList) {
+        Map<String, Double> totalCosts = purchaseList
+            .stream()
+            .collect(Collectors.groupingBy(Purchase::getProductCategory, Collectors.summingDouble(Purchase::getPrice)));
+
+        totalCosts.forEach((category,price)  -> {
+            table.addCell(category);
+            table.addCell(String.valueOf(price));
+        });
     }
 }
