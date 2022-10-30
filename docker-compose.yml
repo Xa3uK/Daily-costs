@@ -18,4 +18,13 @@ services:
     expose:
       - 8080
     ports:
-      - 8080:8080
+      - 8888:8080
+
+  web2:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/daily_costs
+    expose:
+      - 8080
+    ports:
+      - 9999:8080
