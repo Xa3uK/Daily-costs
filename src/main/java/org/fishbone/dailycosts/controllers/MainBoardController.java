@@ -2,11 +2,8 @@ package org.fishbone.dailycosts.controllers;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.SneakyThrows;
@@ -132,11 +129,8 @@ public class MainBoardController {
             return "/main";
         }
 
-        purchaseDTO.setPrice(purchaseDTO.getPrice().replace(",", "."));
-        Purchase purchase = modelMapper.map(purchaseDTO, Purchase.class);
-
         personDetailsService.findUserByLogin(personDetailsService.getCurrentUserLogin())
-        .ifPresent(user -> purchaseService.save(purchase, user));
+            .ifPresent(user -> purchaseService.save(purchaseDTO, user));
 
         return "redirect:/main";
     }

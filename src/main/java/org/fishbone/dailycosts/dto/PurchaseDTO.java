@@ -25,4 +25,6 @@ public class PurchaseDTO {
         message = "Price should contains only positive digits without spaces. In format #.##")
     @Size(min = 1, max = 6, message = "Price should be between 1-999999")
     private String price;
+
+    private String date;
 }
