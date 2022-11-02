@@ -14,7 +14,7 @@ import org.fishbone.dailycosts.models.User;
 import org.fishbone.dailycosts.services.BalanceService;
 import org.fishbone.dailycosts.services.PersonDetailsService;
 import org.fishbone.dailycosts.services.PurchaseService;
-import org.fishbone.dailycosts.util.FilesExporter;
+import org.fishbone.dailycosts.utils.FilesExporter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

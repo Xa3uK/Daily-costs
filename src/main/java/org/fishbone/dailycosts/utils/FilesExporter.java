@@ -1,4 +1,4 @@
-package org.fishbone.dailycosts.util;
+package org.fishbone.dailycosts.utils;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
