@@ -21,7 +21,7 @@ class PurchaseRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    void savePurchase() {
+    void purchaseMustBeSaved() {
         Purchase purchase = new Purchase("Milk", "Food", 12.0);
 
         purchaseRepository.save(purchase);
@@ -35,7 +35,7 @@ class PurchaseRepositoryTest {
     }
 
     @Test
-    void testFindPurchaseByUserId() {
+    void mustReturnAllPurchasesByUserId() {
         User user = new User();
         userRepository.save(user);
         Purchase purchase1 = new Purchase("Milk", "Food", 12.0, user);

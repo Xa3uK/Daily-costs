@@ -37,7 +37,7 @@ class PurchaseServiceTest {
     }
 
     @Test
-    void canSavePurchase() {
+    void testSavePurchaseWithAllFields() {
         PurchaseDTO purchaseDTO = new PurchaseDTO("Milk", "Food", "12.5", "2022-12-12");
         User user = new User();
 
@@ -54,7 +54,7 @@ class PurchaseServiceTest {
     }
 
     @Test
-    void canSavePurchaseWithEmptyDate() {
+    void testSavePurchaseAndSetCurrentDateIfDateIsEmpty() {
         PurchaseDTO purchaseDTO = new PurchaseDTO("Milk", "Food", "12.5", null);
         User user = new User();
         Purchase purchase = purchaseService.modelMapper.map(purchaseDTO, Purchase.class);
@@ -72,7 +72,7 @@ class PurchaseServiceTest {
     }
 
     @Test
-    void canDeletePurchaseById() {
+    void testDeletePurchaseById() {
         int id = 5;
 
         purchaseService.deletePurchaseById(id);
@@ -81,7 +81,7 @@ class PurchaseServiceTest {
     }
 
     @Test
-    void findPurchaseByUserId() {
+    void testFindPurchasesByUserId() {
         int id = 5;
 
         purchaseService.findPurchaseByUserId(id);
@@ -90,7 +90,7 @@ class PurchaseServiceTest {
     }
 
     @Test
-    void findPurchaseByFilterWithCategory() throws ParseException {
+    void testFindPurchaseByFilterWithCategory() throws ParseException {
         String from = "2022-12-12";
         String to = "2022-12-13";
         String category = "Food";
@@ -105,16 +105,16 @@ class PurchaseServiceTest {
     }
 
     @Test
-    void findPurchaseByFilterWithOutCategory() throws ParseException {
+    void testFindPurchaseByFilterIfCategoryIsEmpty() throws ParseException {
         String from = "2022-12-12";
         String to = "2022-12-13";
-        String category = "All";
+        String defaultCategory = "All";
         int id = 1;
 
         Date fromDate = new SimpleDateFormat("yy-MM-dd").parse(from);
         Date toDate = new SimpleDateFormat("yy-MM-dd").parse(to);
 
-        purchaseService.findPurchaseByFilter(from, to, category, id);
+        purchaseService.findPurchaseByFilter(from, to, defaultCategory, id);
         verify(purchaseRepository)
             .findAllByDateBetweenAndUserId(fromDate, toDate, id);
     }
