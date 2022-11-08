@@ -49,6 +49,14 @@ public class Purchase {
         this.date = new Date();
     }
 
+    public Purchase(String productName, String productCategory, Double price, User user) {
+        this.productName = productName;
+        this.productCategory = productCategory;
+        this.price = price;
+        this.date = new Date();
+        this.user = user;
+    }
+
     @SneakyThrows
     public String getFormattedDate() {
         return new SimpleDateFormat("dd-MM-yyyy").format(date);

@@ -1,5 +1,8 @@
 package org.fishbone.dailycosts.services;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PurchaseService {
+
     private final String pattern = "yyyy-MM-dd";
     private final DateFormat df = new SimpleDateFormat(pattern);
     PurchaseRepository purchaseRepository;
@@ -46,11 +50,13 @@ public class PurchaseService {
 
     @Transactional
     public void save(PurchaseDTO purchaseDTO, User user) {
-        if (purchaseDTO.getDate().isBlank()) {
+        if (isNull(purchaseDTO.getDate()) || purchaseDTO.getDate().isBlank()) {
             purchaseDTO.setDate(df.format(new Date()));
         }
 
-        purchaseDTO.setPrice(purchaseDTO.getPrice().replace(",", "."));
+        if (nonNull(purchaseDTO.getPrice())) {
+            purchaseDTO.setPrice(purchaseDTO.getPrice().replace(",", "."));
+        }
 
         Purchase purchase = modelMapper.map(purchaseDTO, Purchase.class);
         purchase.setUser(user);
