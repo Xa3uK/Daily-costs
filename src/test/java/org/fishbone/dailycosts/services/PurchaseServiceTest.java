@@ -4,12 +4,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.verify;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import org.fishbone.dailycosts.dto.PurchaseDTO;
 import org.fishbone.dailycosts.models.Purchase;
 import org.fishbone.dailycosts.models.User;
@@ -24,8 +24,6 @@ import org.modelmapper.ModelMapper;
 
 @ExtendWith(MockitoExtension.class)
 class PurchaseServiceTest {
-    private final String pattern = "yyyy-MM-dd";
-    private final DateFormat df = new SimpleDateFormat(pattern);
 
     @Mock
     private PurchaseRepository purchaseRepository;
@@ -84,9 +82,11 @@ class PurchaseServiceTest {
     void testFindPurchasesByUserId() {
         int id = 5;
 
-        purchaseService.findPurchaseByUserId(id);
+       List<Purchase> purchaseList = purchaseService.findPurchaseByUserId(id);
 
         verify(purchaseRepository).findByUserId(id);
+
+        assertNotNull(purchaseList);
     }
 
     @Test
