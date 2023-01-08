@@ -37,8 +37,7 @@ public class BalanceController {
     @GetMapping
     public String show(Model model) {
         User user = personDetailsService.findUserByLogin(personDetailsService.getCurrentUserLogin()).get();
-        List<Revenue> revenueList = balanceService.findRevenueByUserId(user.getId());
-        revenueList.sort(Comparator.comparing(Revenue::getDate).reversed());
+        List<Revenue> revenueList = balanceService.findRevenueByUserIdSortedByDate(user.getId());
 
         model.addAttribute("revenues", revenueList);
         model.addAttribute("RevenueDTO", new RevenueDTO());

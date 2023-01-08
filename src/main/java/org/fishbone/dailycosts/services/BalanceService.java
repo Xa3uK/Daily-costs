@@ -25,6 +25,10 @@ public class BalanceService {
         return balanceRepository.findByUserId(userId);
     }
 
+    public List<Revenue> findRevenueByUserIdSortedByDate(int userId){
+        return balanceRepository.findAllByUserIdOrderByDateDesc(userId);
+    }
+
     public void deleteRevenueById(int id){
         balanceRepository.deleteById(id);
     }

@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface BalanceRepository extends JpaRepository<Revenue, Integer> {
 
     List<Revenue> findByUserId(int userId);
+
+    List<Revenue> findAllByUserIdOrderByDateDesc(int userId);
 }
