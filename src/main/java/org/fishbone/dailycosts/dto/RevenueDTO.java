@@ -17,4 +17,5 @@ public class RevenueDTO {
     @Size(min = 1, max = 6, message = "Amount should be between 1-999999")
     private String amount;
     private String revenueType;
+    private String date;
 }
