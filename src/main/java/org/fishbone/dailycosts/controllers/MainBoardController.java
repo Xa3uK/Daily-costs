@@ -94,7 +94,7 @@ public class MainBoardController {
                       BindingResult bindingResult,
                       @RequestParam(required = false, defaultValue = "All") String category,
                       @RequestParam(required = false, defaultValue = "22-01-01") String from,
-                      @RequestParam(required = false, defaultValue = "25-12-31") String to) {
+                      @RequestParam(required = false, defaultValue = "44-12-31") String to) {
 
         if (bindingResult.hasErrors()) {
             User user = personDetailsService.findUserByLogin(personDetailsService.getCurrentUserLogin()).get();

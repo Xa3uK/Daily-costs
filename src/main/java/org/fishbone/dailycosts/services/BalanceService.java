@@ -1,5 +1,9 @@
 package org.fishbone.dailycosts.services;
 
+import static java.util.Objects.isNull;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.fishbone.dailycosts.models.Revenue;
@@ -35,7 +39,6 @@ public class BalanceService {
 
     @Transactional
     public void save(Revenue revenue, User user){
-        revenue.setDate(new Date());
         revenue.setUser(user);
         balanceRepository.save(revenue);
     }

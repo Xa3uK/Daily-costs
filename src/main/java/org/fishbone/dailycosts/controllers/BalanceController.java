@@ -1,6 +1,11 @@
 package org.fishbone.dailycosts.controllers;
 
-import java.util.Comparator;
+import static java.util.Objects.isNull;
+import static org.apache.logging.log4j.util.Strings.isBlank;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -22,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/balance")
 public class BalanceController {
+    private final String pattern = "yyyy-MM-dd";
+    private final DateFormat df = new SimpleDateFormat(pattern);
 
     BalanceService balanceService;
     PersonDetailsService personDetailsService;
@@ -57,6 +64,10 @@ public class BalanceController {
         }
 
         revenueDTO.setAmount(revenueDTO.getAmount().replace(",", "."));
+        if (isNull(revenueDTO.getDate()) || revenueDTO.getDate().isBlank()) {
+            revenueDTO.setDate(df.format(new Date()));
+        }
+
         Revenue revenue = modelMapper.map(revenueDTO, Revenue.class);
 
         String userLogin = personDetailsService.getCurrentUserLogin();
@@ -67,7 +78,7 @@ public class BalanceController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteBook(@PathVariable("id") int id) {
+    public String deleteRevenue(@PathVariable("id") int id) {
 
         balanceService.deleteRevenueById(id);
 
